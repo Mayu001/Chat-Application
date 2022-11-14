@@ -24,8 +24,9 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage addUser(@Payload ChatMessage chatMessage,
                                SimpMessageHeaderAccessor headerAccessor) {
-        // Addition of username in web socket session
-        log.info("");
+
+        log.info("New User Joined the session with userID :{}", chatMessage.getSender());
+        chatMessage.setType(ChatMessage.MessageType.JOIN);
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }
